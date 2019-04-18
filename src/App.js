@@ -7,40 +7,39 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      picture: ''
+      picture: '',
+      breed: ''
     }
   }
 
+  handleChange = (e) => {
+    this.setState({ breed: e.target.value })
+  }
 
-  // componentDidMount = () => {
-  //   axios.get('https://dog.ceo/api/breed/Affenpinscher/images/random')
-  //     .then(res => {
-  //       console.log(res);
-  //       this.setState({ picture: res.data });
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // }
 
-  handleSubmit = () => {
-    axios.get('https://dog.ceo/api/breed/Affenpinscher/images/random')
+  handleSubmit = (e) => {
+    e.preventDefault()
+    axios.get(`https://dog.ceo/api/breed/${this.state.breed}/images/random`)
       .then(res => {
         console.log(res);
         this.setState({ picture: res.data });
+        console.log("picture: ", this.state.picture)
       })
       .catch(error => {
         console.log(error)
       })
+
   }
 
   render() {
     return (
       <div>
+        <form onSubmit={this.handleSubmit}>
 
-        <button onClick={this.handleSubmit} />
-        <img src={this.state.picture.message} alt="dog picture" />
-
+          <img src={this.state.picture.message} alt="dog picture" />
+          <input type="text" onChange={this.handleChange} />
+          <input type="submit" value="Submit" />
+        </form>
       </div>
     );
   }
