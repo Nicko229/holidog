@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Banner from './banner';
+import placeholder from './placeholder.jpg';
 import './App.css';
 
 
@@ -28,17 +30,28 @@ class App extends Component {
       .catch(error => {
         console.log(error)
       })
-
   }
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
+      <div className="main-div">
+        <Banner />
 
-          <img src={this.state.picture.message} alt="dog picture" />
-          <input type="text" onChange={this.handleChange} />
-          <input type="submit" value="Submit" />
+
+        <form onSubmit={this.handleSubmit} className="dog-form">
+          <div className="search-div">
+            <h3>Type in your favourite dog breed to see pictures of your future pets</h3>
+            <input type="text" onChange={this.handleChange} />
+            <br />
+            <input type="submit" value="Submit" />
+          </div>
+          <div className="image-div">
+            {console.log(this.state.picture)}
+            <img className="dog-image" src={
+              this.state.picture === '' ? placeholder : this.state.picture.message
+            } />
+          </div>
+
         </form>
       </div>
     );
